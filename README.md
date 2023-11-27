@@ -4,7 +4,7 @@ Group: 4
 Name: Hu Kaiyang
 Student ID: 12969893
 
-Application link: https://s381f-project-inventory-management-system.onrender.com
+Application link: https://s381f-project-inventory-management.onrender.com
 
 ********************************************
 Start：
