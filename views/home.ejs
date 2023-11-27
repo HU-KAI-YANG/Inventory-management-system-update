@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .content {
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .animation-start-state {
+            transition: transform 0.3s ease;
+        }
+
+        .animation-end-state {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>
+                <%= pageTitle %>
+            </h1>
+            <nav>
+                <ul>
+                    <% navigation.forEach(item=> { %>
+                        <li><a href="<%= item.link %>">
+                                <%= item.text %>
+                            </a></li>
+                        <% }); %>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="content">
+        <h2>Your Id: <%= userId %></h2>
+        <p>Welcome to the Inventory Management System</p>
+        <div>
+            <h2>Announcements</h2>
+            <p>Check out our latest announcements and updates.</p>
+        </div>
+        <div>
+            <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to <a href="/contact">contact us</a>.</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Inventory Management System</p>
+    </footer>
+</body>
+
+</html>

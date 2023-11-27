@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Inventory List</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px 10px 10px 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Inventory List</h1>
+        <form action="/inventory" method="get">
+            <label><strong>Name:</strong></label>
+            <input style="width: 60px;" type="text" name="name" value="<%= query.name %>">
+            <label><strong>Quantity greater than:</strong></label>
+            <input style="width: 60px;" type="number" name="gt" value="<%= query.gt %>">
+            <button type="submit">Search</button>
+        </form>
+        <ul>
+            <% inventoryItems.forEach(function(item, index) { %>
+                <li>
+                    <label><strong>Name:</strong></label>
+                    <span><%= item.name %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="quantity<%= index %>"><strong>Quantity:</strong></label>
+                    <input style="width: 60px;" type="number" id="quantity_<%= item.name %>" name="quantity" value="<%= item.quantity %>">
+                    <button type="button" onclick="updateItem('<%= item.name %>')">Update</button>
+                    <button type="button" onclick="deleteItem('<%= item.name %>')">Delete</button>
+                </li>
+            <% }); %>
+            
+        </ul>
+        <form><a href="/inventory/add">Add New</a></form>
+        <header>
+            <a href="/home" class="home-button">Return to Home Page</a>
+        </header>
+    </div>
+    <script>
+        async function updateItem(itemId) {
+            console.log(itemId)
+            const quantityId = 'quantity_' + encodeURIComponent(itemId);
+            const quantity = document.getElementById(quantityId).value;
+            const response = await fetch(`/api/inventory/${encodeURIComponent(itemId)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: String(itemId), quantity: Number(quantity) })
+            });
+
+            const result = await response.json();
+            console.log(result);
+            alert("Update success")
+        }
+
+        async function deleteItem(itemId) {
+            const response = await fetch(`/api/inventory/${itemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            const result = await response.json();
+            console.log(result);
+            alert("Delete success")
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
